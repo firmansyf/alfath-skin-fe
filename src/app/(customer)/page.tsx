@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import BannerSlider from '@/components/customer/BannerSlider';
 import ProductCard from '@/components/customer/ProductCard';
 import { ArrowRight, Heart, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 

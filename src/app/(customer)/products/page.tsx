@@ -1,6 +1,8 @@
 import ProductsClient from '@/components/customer/ProductsClient';
+import JsonLd from '@/components/common/JsonLd';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://firstmatebeauties.com';
 
 async function getProducts(params: Record<string, string | undefined>) {
   try {
@@ -50,12 +52,41 @@ export default async function ProductsPage({ searchParams }: Props) {
     getCategories(),
   ]);
 
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Produk Skincare — FirstMate Beauty',
+    url: `${siteUrl}/products`,
+    numberOfItems: productsData.data.length,
+    itemListElement: productsData.data.map(
+      (product: { slug: string; name: string }, index: number) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: product.name,
+        url: `${siteUrl}/products/${product.slug}`,
+      })
+    ),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Beranda', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Produk', item: `${siteUrl}/products` },
+    ],
+  };
+
   return (
-    <ProductsClient
-      initialProducts={productsData.data}
-      initialPagination={productsData.pagination}
-      categories={categories}
-      currentFilters={params}
-    />
+    <>
+      <JsonLd data={itemListJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
+      <ProductsClient
+        initialProducts={productsData.data}
+        initialPagination={productsData.pagination}
+        categories={categories}
+        currentFilters={params}
+      />
+    </>
   );
 }

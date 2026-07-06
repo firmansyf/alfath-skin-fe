@@ -146,21 +146,40 @@ function DescriptionCard({
   );
 }
 
-export default function ProductDetailClient({ slug }: { slug: string }) {
+const defaultVariantId = (p: any): number | null => {
+  const variants = Array.isArray(p?.variants) ? p.variants : [];
+  if (variants.length === 0) return null;
+  const inStock = variants.find((v: any) => Number(v.stock) > 0);
+  return (inStock || variants[0]).id;
+};
+
+export default function ProductDetailClient({
+  slug,
+  initialProduct,
+}: {
+  slug: string;
+  initialProduct?: any;
+}) {
   const router = useRouter();
   const { addToCart } = useCartStore();
-  const [product, setProduct] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [product, setProduct] = useState<any>(initialProduct ?? null);
+  const [isLoading, setIsLoading] = useState(!initialProduct);
   const [quantity, setQuantity] = useState(1);
   const [imageError, setImageError] = useState(false);
   const [activeImage, setActiveImage] = useState<string | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
-  const [selectedVariantId, setSelectedVariantId] = useState<number | null>(null);
+  const [selectedVariantId, setSelectedVariantId] = useState<number | null>(() =>
+    defaultVariantId(initialProduct)
+  );
   const [descExpanded, setDescExpanded] = useState(false);
 
   useEffect(() => {
-    fetchProduct();
+    // Product is server-rendered when initialProduct is provided (SEO);
+    // only fetch client-side as a fallback.
+    if (!initialProduct) {
+      fetchProduct();
+    }
   }, [slug]);
 
   const fetchProduct = async () => {
@@ -168,12 +187,7 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
       const response = await productsAPI.getBySlug(slug);
       const data = response.data.data;
       setProduct(data);
-      const variants = Array.isArray(data?.variants) ? data.variants : [];
-      if (variants.length > 0) {
-        // Default to first in-stock variant, fallback to first variant
-        const inStock = variants.find((v: any) => Number(v.stock) > 0);
-        setSelectedVariantId((inStock || variants[0]).id);
-      }
+      setSelectedVariantId(defaultVariantId(data));
     } catch (error) {
       console.error('Error fetching product:', error);
       toast.error('Produk tidak ditemukan');

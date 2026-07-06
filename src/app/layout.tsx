@@ -56,9 +56,9 @@ export const metadata: Metadata = {
     shortcut: '/logoPav.png',
     apple: '/logoPav.png',
   },
-  alternates: {
-    canonical: siteUrl,
-  },
+  // NOTE: no global `alternates.canonical` here — a root canonical would make
+  // every page without its own canonical claim to be the homepage. Each
+  // indexable page sets its own canonical instead.
 };
 
 export default function RootLayout({
@@ -78,6 +78,23 @@ export default function RootLayout({
             logo: `${siteUrl}/logo.png`,
             description: 'Platform jual-beli skincare terpercaya dengan kualitas terbaik dan harga terjangkau.',
             sameAs: [],
+          }}
+        />
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'FirstMate Beauty',
+            url: siteUrl,
+            inLanguage: 'id-ID',
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: {
+                '@type': 'EntryPoint',
+                urlTemplate: `${siteUrl}/products?search={search_term_string}`,
+              },
+              'query-input': 'required name=search_term_string',
+            },
           }}
         />
         <AuthProvider>

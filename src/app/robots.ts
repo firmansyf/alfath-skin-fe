@@ -18,6 +18,7 @@ export default function robots(): MetadataRoute.Robots {
           '/login',
           '/register',
           '/verify-otp',
+          '/forgot-password',
         ],
       },
     ],
