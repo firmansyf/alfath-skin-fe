@@ -249,9 +249,9 @@ export default function ProductsClient({
           <div className="flex-1">
             {/* Count + mobile sort row */}
             <div className="flex items-center justify-between mb-4">
-              <p className="text-sm text-gray-500">
+              {/* <p className="text-sm text-gray-500">
                 <span className="font-medium text-gray-700">{initialPagination.totalItems}</span> produk ditemukan
-              </p>
+              </p> */}
               {/* Sort — mobile only */}
               <div className="lg:hidden">
                 <SortSelect />

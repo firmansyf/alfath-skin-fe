@@ -13,9 +13,11 @@ import {
   getPaymentStatusText,
 } from '@/lib/utils';
 import {
+  Check,
   CheckCircle,
   ChevronLeft,
   Clock,
+  Copy,
   Download,
   ExternalLink,
   MapPin,
@@ -90,6 +92,18 @@ export default function CustomerOrderDetailPage({ params }: { params: Promise<{ 
   const [isRequestingRefund, setIsRequestingRefund] = useState(false);
   const [isConfirmingReceived, setIsConfirmingReceived] = useState(false);
   const [isDownloadingQris, setIsDownloadingQris] = useState(false);
+  const [copiedResi, setCopiedResi] = useState<string | null>(null);
+
+  const handleCopyResi = async (trackingNumber: string) => {
+    try {
+      await navigator.clipboard.writeText(trackingNumber);
+      setCopiedResi(trackingNumber);
+      toast.success('No. resi berhasil disalin');
+      setTimeout(() => setCopiedResi(null), 2000);
+    } catch {
+      toast.error('Gagal menyalin no. resi');
+    }
+  };
 
   const handleDownloadQris = async () => {
     if (!qrisUrl) return;
@@ -501,9 +515,29 @@ export default function CustomerOrderDetailPage({ params }: { params: Promise<{ 
                       {s.tracking_number && (
                         <div>
                           <p className="text-xs text-gray-500 mb-1">No. Resi</p>
-                          <p className="text-sm font-semibold text-gray-900 font-mono tracking-wide">
-                            {s.tracking_number}
-                          </p>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm font-semibold text-gray-900 font-mono tracking-wide">
+                              {s.tracking_number}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => handleCopyResi(s.tracking_number!)}
+                              className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
+                              title="Salin no. resi"
+                            >
+                              {copiedResi === s.tracking_number ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5" />
+                                  Tersalin
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3.5 h-3.5" />
+                                  Salin
+                                </>
+                              )}
+                            </button>
+                          </div>
                         </div>
                       )}
                       {s.tracking_url && (

@@ -13,10 +13,10 @@ const ogImage = `${siteUrl}/logo.png`;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'FirstMate Beauty - Jual Beli Produk Skincare Online',
+    default: 'FirstMate Beauty - Skincare Original untuk Kulit Sehat & Glowing',
     template: '%s | FirstMate Beauty',
   },
-  description: 'Platform jual-beli skincare terpercaya dengan kualitas terbaik dan harga terjangkau. Temukan produk perawatan kulit original dengan harga terbaik.',
+  description: 'Belanja skincare original di FirstMate Beauty. Rangkaian perawatan kulit berkualitas dengan harga bersahabat untuk kulit sehat, cerah, dan glowing setiap hari.',
   keywords: ['skincare', 'perawatan kulit', 'kosmetik', 'kecantikan', 'FirstMate Beauty', 'jual skincare', 'beli skincare online'],
   authors: [{ name: 'FirstMate Beauty' }],
   creator: 'FirstMate Beauty',
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
     locale: 'id_ID',
     url: siteUrl,
     siteName: 'FirstMate Beauty',
-    title: 'FirstMate Beauty - Jual Beli Produk Skincare Online',
-    description: 'Platform jual-beli skincare terpercaya dengan kualitas terbaik dan harga terjangkau.',
+    title: 'FirstMate Beauty - Skincare Original untuk Kulit Sehat & Glowing',
+    description: 'Skincare original dan berkualitas dengan harga bersahabat. Wujudkan kulit sehat dan glowing bersama FirstMate Beauty.',
     images: [
       {
         url: ogImage,
@@ -48,8 +48,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'FirstMate Beauty - Jual Beli Produk Skincare Online',
-    description: 'Platform jual-beli skincare terpercaya dengan kualitas terbaik dan harga terjangkau.',
+    title: 'FirstMate Beauty - Skincare Original untuk Kulit Sehat & Glowing',
+    description: 'Skincare original dan berkualitas dengan harga bersahabat. Wujudkan kulit sehat dan glowing bersama FirstMate Beauty.',
     images: [ogImage],
   },
   icons: {
@@ -76,7 +76,7 @@ export default function RootLayout({
             name: 'FirstMate Beauty',
             url: siteUrl,
             logo: `${siteUrl}/logo.png`,
-            description: 'Platform jual-beli skincare terpercaya dengan kualitas terbaik dan harga terjangkau.',
+            description: 'Skincare original dan berkualitas dengan harga bersahabat. Wujudkan kulit sehat dan glowing bersama FirstMate Beauty.',
             sameAs: [],
           }}
         />
