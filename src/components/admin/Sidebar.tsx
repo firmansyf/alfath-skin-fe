@@ -15,6 +15,7 @@ import {
   ShoppingBag,
   Users,
   X,
+  Pen,
 } from 'lucide-react';
 import NextImage from 'next/image';
 import Link from 'next/link';
@@ -43,6 +44,11 @@ export default function Sidebar() {
       href: '/admin/products',
       label: 'Produk',
       icon: Package,
+    },
+    {
+      href: '/admin/blog',
+      label: 'Blog',
+      icon: Pen,
     },
     {
       href: '/admin/categories',
